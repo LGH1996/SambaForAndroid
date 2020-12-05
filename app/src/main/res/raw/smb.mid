@@ -1,0 +1,24 @@
+[global]
+interfaces =  wlan0 eth0 lo
+workgroup = WORKGROUP
+server string = Samba on Android
+netbios name = ANDROID
+remote announce = 255.255.255.255
+encrypt passwords = yes
+security = USER
+restrict anonymous = 1
+load printers = no
+printcap name = /dev/null
+disable spoolss = yes
+deadtime = 5
+delete readonly = yes
+nt acl support = no
+inherit permissions = yes
+socket options = SO_SNDBUF=16384 SO_RCVBUF=16384
+[sdcard]
+vfs objects = fake_perms
+comment = Android /mnt/sdcard
+path = /mnt/sdcard
+read only = no
+writable = yes
+guest ok = no
