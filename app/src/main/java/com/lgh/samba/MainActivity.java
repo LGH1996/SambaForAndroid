@@ -3,6 +3,10 @@ package com.lgh.samba;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
 
@@ -98,6 +102,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
 
-
+        TextView button = findViewById(R.id.but);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Log.i("LGH_LOG", AdbUtility.exec("su"));
+                AdbUtility.exec("chmod 777 /data/data/com.lgh.samba/files/bin/nmbd");
+                AdbUtility.exec("chmod 777 /data/data/com.lgh.samba/files/bin/smbd");
+                AdbUtility.exec("chmod 777 /data/data/com.lgh.samba/files/bin/smbpasswd");
+                AdbUtility.exec("chmod 777 /data/data/com.lgh.samba/files/bin/testparm");
+                AdbUtility.exec("chmod 777 /data/data/com.lgh.samba/files/bin/up.sh");
+                AdbUtility.exec("sh /data/data/com.lgh.samba/files/bin/up.sh");
+//                AdbUtility.exec("./data/data/com.lgh.samba/files/bin/smbd");
+                Toast.makeText(MainActivity.this, "ok", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
