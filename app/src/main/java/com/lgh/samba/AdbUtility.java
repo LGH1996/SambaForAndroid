@@ -1,17 +1,31 @@
 package com.lgh.samba;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 
 public class AdbUtility {
+
+    private static Process process;
+    private static PrintWriter printWriter;
+
     public static void exec(String command) {
         try {
-            Process process = Runtime.getRuntime().exec("su");
-            PrintWriter printWriter = new PrintWriter(process.getOutputStream());
+            if (printWriter == null || process == null) {
+                process = Runtime.getRuntime().exec("su");
+                printWriter = new PrintWriter(process.getOutputStream());
+            }
             printWriter.println(command);
-            printWriter.close();
-        } catch (IOException e) {
+            printWriter.flush();
+        } catch (Throwable e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void release() {
+        if (printWriter != null) {
+            process.destroy();
+            printWriter.close();
+            process = null;
+            printWriter = null;
         }
     }
 }
